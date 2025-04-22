@@ -1,0 +1,41 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: black
+}
+
+h1 {
+    margin: 20px;
+}
+
+.dashboard-form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: solid;
+    padding: 10px;
+    margin: 20px;
+}
+
+.new-list-button{
+    width: 300px;
+}
+
+.left-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.right-column{
+    grid-column: 2;
+    border-left: solid;
+    padding: 10px;
+}
+
+.list{
+    border: solid;
+    margin-bottom: 5px;
+    width: 145px;
+    padding: 5px;
+}
+
