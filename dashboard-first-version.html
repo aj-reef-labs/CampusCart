@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="styles/dashboard.css">
+
+    <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32" type="image/x-icon">
+</head>
+<body>
+
+    <div class="headline">
+        <img class="logo" src="images/CampusCart - logo.png" alt="CampusCart Logo">
+    </div>
+
+    <h1>Dashboard</h1>
+
+    <div class="nav-form">
+        <nav id="nav-board" class="nav-board">
+            <ul>
+                <li><a href="dashboard-first-version.html">Dashboard</a></li>
+                <li><a href="list-first-version.html">List</a></li>
+                <li><a href="settings-first-version.html">Settings</a></li>
+                <li><a href="account-mangagement-first-version.html">Account Management</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="dashboard-form">
+
+        <div class="left-column">
+
+            
+
+            <div class="list-title full-width">
+                <button class="new-list-button" onclick="showAddForm()">+ Add Item</button>
+            </div>
+
+            <div>
+                <h2>Current Lists</h2>
+                <div id="current-lists">
+                    <button class="list">List 1</button>
+                    <button class="list">List 2</button>
+                    <button class="list">List 3</button>
+                </div>
+            </div>
+            
+            <div>
+                <h2>Past Lists</h2>
+                <div id="past-lists">
+                    <button class="list">List 1</button>
+                    <button class="list">List 2</button>
+                    <button class="list">List 3</button>
+                </div>
+            </div>
+
+        </div>   
+
+        <div class="right-column">
+            <h2>Invite Your Roommates</h2>
+        </div>
+    </div>
+   
+
+    <script>
+        function toggleMenu() {
+        const nav = document.getElementById('nav-board');
+        nav.classList.toggle('open');
+        }
+        function showAddForm() {
+            const listName = prompt("Enter the name of your new list:");
+            if (!listName) return;
+
+            const listType = prompt("Should this be a 'current' or 'past' list? (Type: current or past)").toLowerCase();
+
+            const newButton = document.createElement("button");
+            newButton.className = "list";
+            newButton.innerText = listName;
+
+            if (listType === "current") {
+                document.getElementById("current-lists").appendChild(newButton);
+            } else if (listType === "past") {
+                document.getElementById("past-lists").appendChild(newButton);
+            } else {
+                alert("List type must be 'current' or 'past'.");
+            }
+        }
+    
+            document.getElementById('items-container').insertAdjacentHTML('beforeend', itemHTML);
+            document.getElementById('new-list-item').value = '';
+            document.getElementById('add-item-form').style.display = 'none';
+        
+    </script>
+
+
+</body>
+</html>
