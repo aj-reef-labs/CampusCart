@@ -31,6 +31,12 @@ h2 {
     text-align: center;
     margin-bottom: 15px;
 }
+
+h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color:rgb(1, 75, 36);
+}
   
 .dashboard-form {
     display: grid;
@@ -68,7 +74,7 @@ h2 {
 select {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
+    font-size: 15px;
     border-radius: 5px;
     border: 1px solid #b3d9b3;
     background-color: #f9f9f9;
@@ -165,7 +171,7 @@ select:hover {
 }
   
 .status-badge {
-    font-size: 12px;
+    font-size: 14px;
     padding: 4px 8px;
     border-radius: 10px;
     background-color: #ddd;
@@ -189,7 +195,7 @@ select:hover {
     background: transparent;
     border: none;
     color: red;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     font-weight: bold;
     transition: transform 0.2s;
