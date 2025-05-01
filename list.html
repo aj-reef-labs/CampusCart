@@ -13,137 +13,118 @@
 </head>
 <body>
 
-    <div class="headline">
-        <img class="logo" src="images/CampusCart - logo.png" alt="CampusCart Logo">
-    </div>
 
+  
     <div class="nav-form">
-        <nav id="nav-board" class="nav-board">
-            <ul>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="list.html">List</a></li>
-                <li><a href="settings.html">Settings</a></li>
-                <li><a href="account-mangagement.html">Account Management</a></li>
-            </ul>
-        </nav>
-    </div>
 
+        <img class="logo" src="images/CampusCart - logo.png" alt="CampusCart Logo">
+
+      <nav id="nav-board" class="nav-board">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="list.html">List</a></li>
+          <li><a href="settings.html">Settings</a></li>
+          <li><a href="account-mangagement.html">Account Management</a></li>
+        </ul>
+      </nav>
+    </div>
+  
     <div class="shopping-list">
-        <div class="header">
-            <div class="list-title">List</div>
-            <button class="add-button" onclick="showAddForm()">+ Add Item</button>
+      <div class="header">
+        <div class="list-title">List</div>
+        <button class="add-button" onclick="showAddForm()">+ Add Item</button>
+      </div>
+  
+      <div id="add-item-form" class="add-item-form" style="display: none; padding: 20px;">
+        <input type="text" id="new-item-name" placeholder="Item name" />
+        <input type="text" id="new-item-price" placeholder="Price" />
+        <button onclick="addItem()">Add</button>
+      </div>
+  
+      <div class="items-container" id="items-container"></div>
+  
+      <div class="totals-section">
+        <div class="totals">
+          <div>In Cart: $<span id="in-cart-total">0.00</span></div>
+          <div>Remaining: $<span id="remaining-total">0.00</span></div>
         </div>
-        
-        <div id="add-item-form" class="add-item-form" style="display: none; padding: 20px;">
-            <input type="text" id="new-item-name" placeholder="Item name" />
-            <button onclick="addItem()">Add</button>
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
         </div>
-        
-        <div class="items-container" id="items-container">
-            <div class="item">
-                <div class="item-left">
-                    <div class="checkbox"></div>
-                    <div class="item-name">Milk</div>
-                </div>
-                <div class="price-container">
-                    <div class="dollar-sign">$</div>
-                    <div class="price-input"></div>
-                </div>
-            </div>
-            
-            <div class="item">
-                <div class="item-left">
-                    <div class="checkbox"></div>
-                    <div class="item-name">Eggs</div>
-                </div>
-                <div class="price-container">
-                    <div class="dollar-sign">$</div>
-                    <div class="price-input"></div>
-                </div>
-            </div>
-            
-            <div class="item">
-                <div class="item-left">
-                    <div class="checkbox"></div>
-                    <div class="item-name">Bread</div>
-                </div>
-                <div class="price-container">
-                    <div class="dollar-sign">$</div>
-                    <div class="price-input"></div>
-                </div>
-            </div>
-            
-            <div class="item">
-                <div class="item-left">
-                    <div class="checkbox"></div>
-                    <div class="item-name">Apples</div>
-                </div>
-                <div class="price-container">
-                    <div class="dollar-sign">$</div>
-                    <div class="price-input"></div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="total-row">
-            <div class="total-label">Total:</div>
-        </div>
-        
-        <div class="footer">
-            <div class="hover-container" onmouseover="showTotal()" onmouseout="hideTotal()">
-                <div class="see-total">See Total</div>
-                <div class="total-amount" id="total-amount" style="display: none;">$0.00</div>
-            </div>
-        </div>
+      </div>
     </div>
-
+  
     <script>
-        
-        function showAddForm() {
-            const form = document.getElementById('add-item-form');
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function addItem() {
-            const itemName = document.getElementById('new-item-name').value;
-            if (!itemName) return;
-
-            const itemHTML = `
-                <div class="item">
-                    <div class="item-left">
-                        <input type="checkbox" class="checkbox" />
-                        <div class="item-name">${itemName}</div>
-                    </div>
-                    <div class="price-container">
-                        <div class="dollar-sign">$</div>
-                        <input class="price-input" type="text" />
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('items-container').insertAdjacentHTML('beforeend', itemHTML);
-            document.getElementById('new-item-name').value = '';
-            document.getElementById('add-item-form').style.display = 'none';
-        }
-
-        function showTotal() {
-            const seeTotal = document.querySelector('.see-total');
-            const totalAmount = document.getElementById('total-amount');
-
-        
-            totalAmount.innerText = '$24.99';
-
-            seeTotal.style.display = 'none';
-            totalAmount.style.display = 'block';
-        }
-
-        function hideTotal() {
-            const seeTotal = document.querySelector('.see-total');
-            const totalAmount = document.getElementById('total-amount');
-
-            seeTotal.style.display = 'block';
-            totalAmount.style.display = 'none';
-        }
+      function showAddForm() {
+        const form = document.getElementById('add-item-form');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+      }
+  
+      function addItem() {
+        const itemName = document.getElementById('new-item-name').value;
+        const itemPrice = parseFloat(document.getElementById('new-item-price').value);
+  
+        if (!itemName || isNaN(itemPrice)) return;
+  
+        const itemHTML = `
+          <div class="item" data-price="${itemPrice}" data-in-cart="false">
+            <label class="custom-checkbox">
+              <input type="checkbox" onchange="toggleItem(this)">
+              <span class="checkmark"></span>
+            </label>
+            <div class="item-name">${itemName}</div>
+            <div class="item-price">$${itemPrice.toFixed(2)}</div>
+            <button class="delete-button" onclick="deleteItem(this)">🗑️</button>
+          </div>
+        `;
+  
+        document.getElementById('items-container').insertAdjacentHTML('beforeend', itemHTML);
+  
+        document.getElementById('new-item-name').value = '';
+        document.getElementById('new-item-price').value = '';
+        document.getElementById('add-item-form').style.display = 'none';
+  
+        updateTotals();
+      }
+  
+      function deleteItem(btn) {
+        const item = btn.closest('.item');
+        item.remove();
+        updateTotals();
+      }
+  
+      function toggleItem(checkbox) {
+        const item = checkbox.closest('.item');
+        item.setAttribute('data-in-cart', checkbox.checked);
+        const container = document.getElementById('items-container');
+        checkbox.checked
+          ? container.appendChild(item)
+          : container.insertBefore(item, container.firstChild);
+        updateTotals();
+      }
+  
+      function updateTotals() {
+        const items = document.querySelectorAll('.item');
+        let inCart = 0;
+        let remaining = 0;
+  
+        items.forEach(item => {
+          const price = parseFloat(item.dataset.price);
+          if (item.querySelector('input[type=checkbox]').checked) {
+            inCart += price;
+          } else {
+            remaining += price;
+          }
+        });
+  
+        document.getElementById('in-cart-total').textContent = inCart.toFixed(2);
+        document.getElementById('remaining-total').textContent = remaining.toFixed(2);
+  
+        const total = inCart + remaining;
+        const percent = total === 0 ? 0 : (inCart / total) * 100;
+        document.getElementById('progress').style.width = percent + '%';
+      }
     </script>
+  
 </body>
 </html>
