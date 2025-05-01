@@ -15,7 +15,7 @@ html, body {
     width: 200px;
     height: auto;
 }
-  
+
 h2 {
     text-align: center;
     margin-bottom: 15px;
@@ -27,6 +27,17 @@ h3 {
     color:rgb(1, 75, 36);
 }
   
+.headline{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 80px 40px 40px 40px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    text-align: center;
+    color: green;
+}
+
 .dashboard-form {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -36,7 +47,7 @@ h3 {
     background-color: rgba(230, 255, 230, 0.9);
     border-radius: 12px;
 }
-  
+
 .left-column, .lists-column {
     background-color: #e6ffe6;
     padding: 30px;
