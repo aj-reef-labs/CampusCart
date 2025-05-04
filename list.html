@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+
+    <link rel="stylesheet" href="styles/list.css">
+
+    <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32" type="image/x-icon">
+</head>
+<body>
+
+  <div class="nav-form">
+    <img class="logo" src="images/CampusCart - logo.png" alt="CampusCart Logo">
+
+    <nav id="nav-board" class="nav-board">
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="list.html">List</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="account-mangagement.html">Account Management</a></li>
+      </ul>
+    </nav>
+  </div>
+
+<div class="content">
+  <div class="list-form">
+
+    <div class="headline">
+      <h3>List</h3>
+    </div>
+
+    <div class="add-button-wrapper">
+      <button class="add-button" onclick="showAddForm()">+ Add Item</button>
+    </div>
+    
+    <div id="add-item-form" class="add-item-form" style="display: none; padding: 20px;">
+      <input type="text" id="new-item-name" placeholder="Item name" />
+      <input type="text" id="new-item-price" placeholder="Price" />
+      <button onclick="addItem()">Add</button>
+    </div>
+  
+    <div class="items-container" id="items-container"></div>
+  
+    <div class="totals-section">
+      <div class="totals">
+        <div>In Cart: $<span id="in-cart-total">0.00</span></div>
+        <div>Remaining: $<span id="remaining-total">0.00</span></div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+  
+  <script>
+    function showAddForm() {
+      const form = document.getElementById('add-item-form');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+  
+    function addItem() {
+      const itemName = document.getElementById('new-item-name').value;
+      const itemPrice = parseFloat(document.getElementById('new-item-price').value);
+  
+      if (!itemName || isNaN(itemPrice)) return;
+  
+      const itemHTML = `
+        <div class="item" data-price="${itemPrice}" data-in-cart="false">
+          <label class="custom-checkbox">
+            <input type="checkbox" onchange="toggleItem(this)">
+            <span class="checkmark"></span>
+          </label>
+          <div class="item-name">${itemName}</div>
+          <div class="item-price">$${itemPrice.toFixed(2)}</div>
+          <button class="delete-button" onclick="deleteItem(this)">🗑️</button>
+        </div>
+      `;
+  
+      document.getElementById('items-container').insertAdjacentHTML('beforeend', itemHTML);
+  
+      document.getElementById('new-item-name').value = '';
+      document.getElementById('new-item-price').value = '';
+      document.getElementById('add-item-form').style.display = 'none';
+  
+      updateTotals();
+    }
+  
+    function deleteItem(btn) {
+      const item = btn.closest('.item');
+      item.remove();
+      updateTotals();
+    }
+  
+    function toggleItem(checkbox) {
+      const item = checkbox.closest('.item');
+      item.setAttribute('data-in-cart', checkbox.checked);
+      const container = document.getElementById('items-container');
+      checkbox.checked
+        ? container.appendChild(item)
+        : container.insertBefore(item, container.firstChild);
+      updateTotals();
+    }
+  
+    function updateTotals() {
+      const items = document.querySelectorAll('.item');
+      let inCart = 0;
+      let remaining = 0;
+  
+      items.forEach(item => {
+        const price = parseFloat(item.dataset.price);
+        if (item.querySelector('input[type=checkbox]').checked) {
+          inCart += price;
+        } else {
+          remaining += price;
+        }
+      });
+  
+      document.getElementById('in-cart-total').textContent = inCart.toFixed(2);
+      document.getElementById('remaining-total').textContent = remaining.toFixed(2);
+  
+      const total = inCart + remaining;
+      const percent = total === 0 ? 0 : (inCart / total) * 100;
+      document.getElementById('progress').style.width = percent + '%';
+    }
+  </script>
+  
+</body>
+</html>

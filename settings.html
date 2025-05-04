@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="styles/settings.css">  
+
+    <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32" type="image/x-icon">
+</head>
+</head>
+<body>
+    <div class="nav-form">
+        <img class="logo" src="images/CampusCart - logo.png" alt="CampusCart Logo">
+        <nav id="nav-board" class="nav-board">
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="list.html">List</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="account-mangagement.html">Account Management</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        <div class="settings-container">
+            <div class="settings-header">
+                <h1 class="settings-title">Settings</h1>
+            </div>
+            
+            <div class="settings-row">
+                <div class="setting-label">Profile</div>
+                <button class="edit-button">Edit</button>
+            </div>
+            
+            <div class="settings-row">
+                <div class="setting-label">Dark Mode</div>
+                <div id="darkModeToggle" class="toggle-container">
+                    <div class="toggle-switch"></div>
+                </div>
+            </div>
+            
+            <div class="settings-row">
+                <div class="setting-label">Notifications</div>
+                <div class="checkbox"></div>
+            </div>
+
+            <div class="settings-row">
+                <div class="setting-label">Help</div>
+
+                <a href="help.html">
+                    <button class="edit-button">More info</button>
+                </a>
+
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        
+        
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.classList.add('toggle-active');
+        }
+        
+        darkModeToggle.addEventListener('click', function() {
+            
+            document.body.classList.toggle('dark-mode');
+            
+           
+            darkModeToggle.classList.toggle('toggle-active');
+            
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+  
+  <!-- Top-left logo -->
+  
+    <div class="nav-form">
+
+      <img class="logo" src="images/CampusCart - logo.png" alt="Logo" />
+
+      <nav id="nav-board" class="nav-board">
+        
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="list.html">List</a></li>
+          <li><a href="settings.html">Settings</a></li>
+          <li><a href="account-mangagement.html" id="account-management-link">Account Management</a></li>
+        </ul>
+      </nav>
+    </div>
+  
+    <div class="headline">
+      <h1>Dashboard</h1>
+    </div>
+    
+    <div class="dashboard-form">
+
+      <!-- Left Column -->
+      <div class="left-column box">
+        <h2>Accounts</h2>
+        <div class="box">
+          <h3>Select Account</h3>
+          <select id="user-select" onchange="updateListsDropdown()">
+            <option value="admin@example.com">admin@example.com</option>
+            <option value="user1@example.com">user1@example.com</option>
+            <option value="user2@example.com">user2@example.com</option>
+          </select>
+  
+          <div id="list-section" style="display:none;">
+            <h3>Accessible Lists</h3>
+            <select id="list-select"></select>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Center Column -->
+      <div class="lists-column box">
+        <h2>Lists</h2>
+        <div class="box">
+          <h3 class="right-align">Current Lists</h3>
+          <div id="current-lists" class="list-container">
+            <button class="list">List 1</button>
+            <button class="list">List 2</button>
+          </div>
+        </div>
+  
+        <div class="box">
+          <h3 class="right-align">Past Lists</h3>
+          <div id="past-lists" class="list-container">
+            <button class="list">List A</button>
+            <button class="list">List B</button>
+          </div>
+        </div>
+  
+        <div class="box">
+          <button class="new-list-button" onclick="showAddForm()">+ Add Item</button>
+        </div>
+      </div>
+  
+      <!-- Right Column -->
+      <div class="third-column box">
+        <h2>Add Roommates</h2>
+      </div>
+    </div>
+  
+    <script>
+      const userLists = {
+        "admin@example.com": ["Admin List 1", "Admin List 2"],
+        "user1@example.com": ["Groceries", "Chores"],
+        "user2@example.com": ["Assignments", "Meetings"]
+      };
+  
+      function updateListsDropdown() {
+        const userSelect = document.getElementById('user-select');
+        const listSelect = document.getElementById('list-select');
+        const listSection = document.getElementById('list-section');
+        const selectedUser = userSelect.value;
+  
+        listSelect.innerHTML = '';
+        if (userLists[selectedUser]) {
+          userLists[selectedUser].forEach(listName => {
+            const option = document.createElement('option');
+            option.text = listName;
+            listSelect.add(option);
+          });
+          listSection.style.display = 'block';
+        } else {
+          listSection.style.display = 'none';
+        }
+  
+        const accountLink = document.getElementById('account-management-link');
+        accountLink.style.display = selectedUser === "admin@example.com" ? "inline" : "none";
+      }
+  
+      function showAddForm() {
+        const listName = prompt("Enter the name of your new list:");
+        if (!listName) return;
+
+        const listType = prompt("Should this be a 'current' or 'past' list?").toLowerCase();
+        const status = prompt("Set status: 'active' or 'archived'").toLowerCase();
+        if (status !== 'active' && status !== 'archived') {
+          alert("Invalid status.");
+          return;
+        }
+
+        const containerId = listType === 'current' ? "current-lists" : listType === 'past' ? "past-lists" : null;
+        if (!containerId) {
+          alert("Invalid type.");
+          return;
+        }
+
+        const buttonWrapper = document.createElement("div");
+        buttonWrapper.className = `list-wrapper ${status}`;
+
+        const button = document.createElement("button");
+        button.className = "list";
+        button.textContent = listName;
+
+        const statusBadge = document.createElement("span");
+        statusBadge.className = "status-badge";
+        statusBadge.textContent = status;
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "delete-btn";
+        deleteBtn.textContent = "✖";
+        deleteBtn.onclick = () => buttonWrapper.remove();
+
+        buttonWrapper.appendChild(button);
+        buttonWrapper.appendChild(statusBadge);
+        buttonWrapper.appendChild(deleteBtn);
+
+        document.getElementById(containerId).appendChild(buttonWrapper);
+      }
+  
+      window.onload = updateListsDropdown;
+    </script>
+  </body>
+  </html>
+  
